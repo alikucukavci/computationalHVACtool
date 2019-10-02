@@ -13,7 +13,6 @@ const projectSchema = new Schema({
   ]
 });
 
-//test
 const Project = model("Project", projectSchema);
 
 module.exports = Project;
