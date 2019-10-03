@@ -13,7 +13,7 @@ axios.get("/api/auth/loggedin").then(response => {
   console.log(user);
   ReactDOM.render(
     <BrowserRouter>
-      <App/>
+      <App user={user}/>
     </BrowserRouter>,
     document.getElementById("root")
   );
