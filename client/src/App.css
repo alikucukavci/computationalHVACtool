@@ -1,3 +1,7 @@
+body {
+  height: 100%
+}
+
 .App {
   text-align: center;
 }
@@ -51,4 +55,13 @@ h2 {
 
 .projects-container > * {
   flex: 1;
+}
+
+.projectBar {
+  background-color: red;
+  height: 100vh
+}
+
+.projectScreen {
+  background-color: green
 }
