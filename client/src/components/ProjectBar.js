@@ -9,12 +9,15 @@ const ProjectBar = () => {
 
 
     
-useEffect(() => {
-    axios.get("/projects")
+    useEffect(() => {
+    const [projects, setProjects] = useState([])
+        axios.get("/projects").then(projects => {
+        setProjects(projects)
+    })
     return () => {
         cleanup
     };
-}, [input])
+}, [])
 
     return (
         <div className="col-3 projectBar">

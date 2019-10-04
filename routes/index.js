@@ -8,6 +8,15 @@ router.get('/', (req, res, next) => {
 });
 
 
+router.get("/projects", (req, res, next) => {
+  Project.find().then(response => {
+      res.json(response);
+    })
+    .catch(err => {
+      res.json(err);
+    })
+})
+
 // POST route => to create a new project
 router.post('/projects', (req, res, next) => {
 
