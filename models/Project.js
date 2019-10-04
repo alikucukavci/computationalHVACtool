@@ -4,6 +4,12 @@ const { Schema, model } = mongoose;
 const projectSchema = new Schema({
   title: String,
   description: String,
+  file: Object,
+  // files: {
+  //   name: String,
+  //   path: String,
+  //   contentType: Schema.Types.Mixed
+  // },
   owner: { type: Schema.Types.ObjectId, ref: "User" },
   Rooms: [
     {
@@ -12,6 +18,9 @@ const projectSchema = new Schema({
     }
   ]
 });
+
+
+
 
 const Project = model("Project", projectSchema);
 

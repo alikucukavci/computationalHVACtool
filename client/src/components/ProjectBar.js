@@ -1,29 +1,23 @@
-import React, {useEffect} from 'react'
-import file from "../projects"
-import axios from "axios"
+import React from 'react'
+
+const ProjectBar = (props) => {
 
 
-const projects = file
-console.log(projects)
-const ProjectBar = () => {
-
-
-    
-    useEffect(() => {
-    const [projects, setProjects] = useState([])
-        axios.get("/projects").then(projects => {
-        setProjects(projects)
-    })
-    return () => {
-        cleanup
-    };
-}, [])
 
     return (
         <div className="col-3 projectBar">
             <h5>Projects</h5>
+
+            {props.projects.map(x => {
+                return (
+                    <div onClick={() => {
+                        props.setOneProject(x)
+                        props.setDisplay("oneProject")
+                    }}>{x.title}</div>
+                )
+            })}
   
-            <button className="btn btn-dark">New</button>
+            <button onClick={()=>props.setDisplay("Form")}  className="btn btn-dark">New</button>
         </div>
     )
 }
