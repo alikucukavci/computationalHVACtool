@@ -23,6 +23,7 @@ router.post('/projects', (req, res, next) => {
   Project.create({
     title: req.body.title,
     description: req.body.description,
+    file: req.body.file,
      // <== add this !
     Rooms: []
   })

@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React from 'react'
 import axios from "axios"
 import { Form, Button } from "react-bootstrap";
 
@@ -14,11 +14,6 @@ const handleChange = event => {
       ...props.createNewProject, [name]: value
     });
   };
-    
-  const fileReader = new FileReader()
-  fileReader.onload = event => {
-    props.setFile(JSON.parse(event.target.result))
-  }
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -67,18 +62,17 @@ const handleChange = event => {
               onChange={handleChange}
             />
           </Form.Group>
+
           <Form.Group>
-            <Form.Label>Upload file:</Form.Label>
-            <Form.Control
-              type="file"
-              name="file"
-              // value="jep"
-               onChange={event=>{
-                 console.log(event)
-                fileReader.readAsText(event[0]);
-               }}
-            />
-          </Form.Group>
+          <Form.Label>Upload file:</Form.Label>
+          <Form.Control
+            type="file"
+            name="fileUpload"
+            value={props.description}
+            onChange={handleChange}
+          />
+        </Form.Group>
+          
           <Button type="submit" >Add</Button>
         </Form>
             
