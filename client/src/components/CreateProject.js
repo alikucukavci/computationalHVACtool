@@ -1,11 +1,32 @@
-import React from 'react'
+import React, {useState, useEffect } from 'react'
 import axios from "axios"
 import { Form, Button } from "react-bootstrap";
+import Files from "react-files";
 
 
 const CreateProject = (props) => {
+
     
-console.log(props)
+  // useEffect(() => {
+  //     axios
+  //     .post("/projects", {
+  //       file: jsonFile
+  //     })
+  //     .then(() => {
+  //       console.log("MongoDB is working")
+  //       })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  //     console.log(jsonFile)
+
+
+  // }, [jsonFile])
+
+  let fileReader = new FileReader()
+  fileReader.onload = event => {
+      props.setFile(JSON.parse(event.target.result));
+  };    
 
 const handleChange = event => {
     const { name, value } = event.target;
@@ -22,9 +43,10 @@ const handleChange = event => {
           .post("/projects", {
             title: props.createNewProject.title,
             description: props.createNewProject.description,
-            file: props.file
+
           })
-          .then(() => {
+          .then((response) => {
+            console.log(response.data)
             props.setDisplay("newProject")
             })
           .catch(err => {
@@ -63,17 +85,27 @@ const handleChange = event => {
             />
           </Form.Group>
 
-          <Form.Group>
+          {/*<Form.Group>
           <Form.Label>Upload file:</Form.Label>
-          <Form.Control
-            type="file"
-            name="fileUpload"
-            value={props.description}
-            onChange={handleChange}
-          />
-        </Form.Group>
-          
-          <Button type="submit" >Add</Button>
+          <div className="files">
+        <Files
+          className="files-dropzone btn-danger"
+          onChange={file => {
+            fileReader.readAsText(file[0]);
+          }}
+          onError={err => console.log(err)}
+          accepts={[".json"]}
+          multiple
+          maxFiles={3}
+          maxFileSize={10000000}
+          minFileSize={0}
+          clickable
+        >
+          Drop files here or click to upload
+        </Files>
+      </div>
+        </Form.Group>*/}
+        <Button type="submit" >Add</Button>
         </Form>
             
             

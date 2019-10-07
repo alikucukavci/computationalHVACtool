@@ -66,9 +66,6 @@ const Login = (props) => {
             <Alert variant="danger">{userInfo.message}</Alert>
           )}
           <Button type="submit">Login</Button>
-
-
-          
         </Form>
       </>
     );

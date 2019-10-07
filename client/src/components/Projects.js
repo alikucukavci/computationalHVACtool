@@ -2,6 +2,9 @@ import React, {useState, useEffect} from 'react'
 import ProjectBar from "./ProjectBar"
 import axios from "axios"
 import CreateProject from "./CreateProject"
+import UploadFile from "./UploadFile"
+import ThreeJS from "./ThreeJS"
+
 
 const Projects = () => {
     const [display, setDisplay] = useState("None")
@@ -11,11 +14,13 @@ const Projects = () => {
         title: "",
         description: "",
     })
-    const [file, setFile] = useState("")
+
+    const [jsonFile, setFile] = useState({})
 
       useEffect(() => {
           axios.get("/projects").then(projects => {
               setProjects(projects.data)
+
               console.log(projects.data)
           })
           setDisplay("None")
@@ -37,7 +42,7 @@ const Projects = () => {
             <div>
                 <div className="row">
                 <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
-                    <CreateProject setDisplay={setDisplay} createNewProject={createNewProject} setcreateNewProject={setcreateNewProject} setDisplay={setDisplay} setProjects={setProjects} projects={projects} file={file} setFile={setFile} />
+                    <CreateProject setDisplay={setDisplay} createNewProject={createNewProject} setcreateNewProject={setcreateNewProject} setDisplay={setDisplay} setProjects={setProjects} projects={projects} jsonFile={jsonFile} setFile={setFile} />
                 </div>
             </div>
         )
@@ -58,9 +63,28 @@ const Projects = () => {
             <div className="row">
             <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
                 <div className="col-9 projectScreen">
-                        <p>NewProjectShown</p>
+                        <UploadFile project={projects[projects.length - 1]} jsonFile={jsonFile} setFile={setFile} setDisplay={setDisplay}/>
+                        
+                        {/*<p>NewProjectShown</p>
                         <p>{createNewProject.title}</p>
                         <p>{createNewProject.description}</p>
+                        <p>{JSON.stringify(jsonFile)} whaaat{console.log(createNewProject, jsonFile)}</p>*/}
+                </div>
+            </div>
+        </div>
+        )
+    } else if (display === "ThreeJS") {
+        return ( 
+            <div>
+            <div className="row">
+            <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
+                <div className="col-9 projectScreen">
+                        <ThreeJS/>
+                        
+                        {/*<p>NewProjectShown</p>
+                        <p>{createNewProject.title}</p>
+                        <p>{createNewProject.description}</p>
+                        <p>{JSON.stringify(jsonFile)} whaaat{console.log(createNewProject, jsonFile)}</p>*/}
                 </div>
             </div>
         </div>

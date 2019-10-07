@@ -11,6 +11,7 @@ const ProjectBar = (props) => {
             {props.projects.map(x => {
                 return (
                     <div onClick={() => {
+                        console.log(x)
                         props.setOneProject(x)
                         props.setDisplay("oneProject")
                     }}>{x.title}</div>
