@@ -79,7 +79,7 @@ const Projects = () => {
             <div className="row">
             <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
                 <div className="col-9 projectScreen">
-                        <ThreeJS/>
+                        <ThreeJS jsonFile={jsonFile}/>
                         
                         {/*<p>NewProjectShown</p>
                         <p>{createNewProject.title}</p>
