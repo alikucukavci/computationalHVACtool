@@ -1,3 +1,5 @@
+//ThreeJS first version
+
 // import React, { useState, useEffect} from 'react'
 // import Files from "react-files";
 // import axios from "axios"
@@ -169,11 +171,8 @@ export default class ThreeJS extends Component {
       cubeArr[i].AHU = 0;  
       cubeArr[i].Airflow = 0;  
 
-      //ADD POINTER
       cubeArr[i].cursor = 'pointer';
 
-
-      //ADD EVENT
       cubeArr[i].on('click', (ev) => {
       this.setState({
         popup: !this.state.popup,
@@ -181,14 +180,14 @@ export default class ThreeJS extends Component {
         roomName: ev.target.Name,
         roomNumber: ev.target.Number,
         roomVolume: ev.target.Volume,
-        roomArea: ev.target.Area,
-        roomAHU: ev.target.AHU,
-        roomAirflow: ev.target.Airflow
+        roomArea: ev.target.Area
+
+
       },()=>console.log("state update:",this.state))
     });
 
 
-      //ADD CUBE TO SCENE
+
       this.scene.add(cubeArr[i]);
 
       console.log(cubeArr[i])
@@ -197,18 +196,102 @@ export default class ThreeJS extends Component {
     //ADD POPUP REFERENCE
     this.popup = false
     
+    
+    
+    //ADD geometry
+    
+    // const geometry = new THREE.BoxGeometry(3, 3, 3)
+    // const geometry1 = new THREE.BoxGeometry(7, 3, 7)
+    // //ADD material  
+    // const material = new THREE.MeshLambertMaterial({ color: '#0xF3FFE2'})
+    // const material1 = new THREE.MeshLambertMaterial({ color: '#007BFF'     })
+    
+    // //ADD geometry and material to a mesh
+    // this.cube = new THREE.Mesh(geometry, material)
+    // this.cube1 = new THREE.Mesh(geometry1, material1)  
+    
+    // //ADD property to cube
+    // this.cube.AHU = 0;
+    // this.cube.Name = "Class room";  //Needs to be changed when JSON
+    // this.cube.Number = 3;  //Needs to be changed when JSON
+    // this.cube.Volume = 50; 
+    // this.cube.Area = 20;  
+    // this.cube.AHU = 0;  
+    // this.cube.Airflow = 0;  
 
-     //Add AMBIENT LIGHT
+  //   //Add position to cube
+  //   this.cube.position.set(0, 0, 0);
+  //   this.cube1.position.set(5, 0, -2);
+
+  //   //Add cube to scene
+  //   this.scene.add(this.cube)
+  //   this.scene.add(this.cube1)
+
+  //  //ADD pointer
+  //   this.cube.cursor = 'pointer';
+  //   // this.cube1.cursor = 'pointer';
+
+  //   //ADD ONCLICK EVENT FOR POPUP
+    
+
+  //   this.cube.on('click', (ev) => {
+  //     // console.log(ev.target)
+  //     // console.log("clicked", this.popup)
+  //     this.setState({
+  //       popup: !this.state.popup,
+  //       id: ev.target.uuid,
+  //       roomName: ev.target.Name,
+  //       roomNumber: ev.target.Number,
+  //       roomVolume: ev.target.Volume
+
+  //     },()=>console.log("state update:",this.state))
+  //   });
+
+     //Add ambient light
      this.lightAmbient = new THREE.AmbientLight(0xffffff, 0.5);
+    //Add ambient light to scene
     this.scene.add(this.lightAmbient)
 
+    // //Add pointlight
+    // this.lightPoint = new THREE.PointLight(0xffffff, 0.5);
+    // //Add point light to scene
+    // this.scene.add(this.lightPoint)
 
-     //ADD SUNLIGHT
-     this.sunLight = new THREE.DirectionalLight(0xffffff, 2.0, 1000);
+    //Add ambient light
+    this.sunLight = new THREE.DirectionalLight(0xffffff, 2.0, 1000);
+    //Add ambient light to scene
     this.scene.add(this.sunLight)
+    // Add interactions
 
-    //SHOW CUBES IN SCENE
-    this.start()
+    // this.cube1.on('click', (ev) => {
+    //   console.log(ev.target)
+    //   console.log("clicked", this.popup)
+    //   this.setState({
+    //     popup: !this.state.popup,
+    //     id:ev.target.uuid
+    //   },()=>console.log("state update:",this.state))
+    // });
+    
+    
+    
+// this.cube.on('touchstart', function(ev) {});
+// this.cube.on('touchcancel', function(ev) {});
+// this.cube.on('touchmove', function(ev) {});
+// this.cube.on('touchend', function(ev) {});
+// this.cube.on('mousedown', function(ev) {});
+// this.cube.on('mouseout', function(ev) {});
+// this.cube.on('mouseover', function(ev) {});
+// this.cube.on('mousemove', function(ev) {});
+//     this.cube.on('mouseup', function (ev) { });
+    
+    // this.scene.on('touchstart', ev => {
+    //   console.log("ev");
+    // })
+    // this.scene.on('touchmove', ev => {
+    //   console.log("ev");
+    // })
+
+this.start()
   }
 
   closePopup = (ev) => {
