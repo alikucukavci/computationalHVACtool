@@ -59,11 +59,60 @@ import { Interaction } from "three.interaction"
 import { Popover, OverlayTrigger, Button} from "react-bootstrap";
 
 
+const data = {
+	"rooms": [{
+			"roomName": "Class room",
+			"roomNumber": "3",
+			"roomVolume": "50",
+			"roomArea": "25",
+			"size": {
+				"x": "3",
+				"y": "3",
+				"z": "3"
+			},
+			"position": {
+				"x": "0",
+				"y": "0",
+				"z": "0"
+			}
+		},
+		{
+			"roomName": "Auditorium",
+			"roomNumber": "1",
+			"roomVolume": "250",
+			"roomArea": "100",
+			"size": {
+				"x": "7",
+				"y": "3",
+				"z": "7"
+			},
+			"position": {
+				"x": "5",
+				"y": "0",
+				"z": "-2"
+			}
+		}
+
+	]
+}
+
+
+console.log(data)
 export default class ThreeJS extends Component {
   state = {
     popup: false,
-    id:""
+    id: "",
+    roomName: "Class room",
+    roomNumber: 0,
+    roomVolume: 0,
+    roomArea: 0,
+    roomAHU: 0,
+    roomAirflow: 0,
+
   }
+  
+  
+
   componentDidMount(){
     // const width = this.mount.clientWidth
     // const height = this.mount.clientHeight
@@ -90,7 +139,7 @@ export default class ThreeJS extends Component {
     this.interaction = new Interaction(this.renderer, this.scene, this.camera);
     //ADD geometry 
     const geometry = new THREE.BoxGeometry(3, 3, 3)
-    const geometry1 = new THREE.BoxGeometry(7, 7, 7)
+    const geometry1 = new THREE.BoxGeometry(7, 3, 7)
     //ADD material  
     const material = new THREE.MeshLambertMaterial({ color: '#0xF3FFE2'})
     const material1 = new THREE.MeshLambertMaterial({ color: '#007BFF'     })
@@ -99,9 +148,18 @@ export default class ThreeJS extends Component {
     this.cube = new THREE.Mesh(geometry, material)
     this.cube1 = new THREE.Mesh(geometry1, material1)  
     
+    //ADD property to cube
+    this.cube.AHU = 0;
+    this.cube.Name = "Class room";  //Needs to be changed when JSON
+    this.cube.Number = 3;  //Needs to be changed when JSON
+    this.cube.Volume = 50; 
+    this.cube.Area = 20;  
+    this.cube.AHU = 0;  
+    this.cube.Airflow = 0;  
+
     //Add position to cube
     this.cube.position.set(0, 0, 0);
-    this.cube1.position.set(5, 0, 0);
+    this.cube1.position.set(5, 0, -2);
 
     //Add cube to scene
     this.scene.add(this.cube)
@@ -124,26 +182,31 @@ export default class ThreeJS extends Component {
     // Add interactions
     this.scene.add(this.cube);
     this.cube.cursor = 'pointer';
-    this.cube1.cursor = 'pointer';
+    // this.cube1.cursor = 'pointer';
 
+    
     this.popup = false
     this.cube.on('click', (ev) => {
       console.log(ev.target)
       console.log("clicked", this.popup)
       this.setState({
         popup: !this.state.popup,
-        id:ev.target.uuid
+        id: ev.target.uuid,
+        roomName: ev.target.Name,
+        roomNumber: ev.target.Number,
+        roomVolume: ev.target.Volume
+
       },()=>console.log("state update:",this.state))
     });
 
-    this.cube1.on('click', (ev) => {
-      console.log(ev.target)
-      console.log("clicked", this.popup)
-      this.setState({
-        popup: !this.state.popup,
-        id:ev.target.uuid
-      },()=>console.log("state update:",this.state))
-    });
+    // this.cube1.on('click', (ev) => {
+    //   console.log(ev.target)
+    //   console.log("clicked", this.popup)
+    //   this.setState({
+    //     popup: !this.state.popup,
+    //     id:ev.target.uuid
+    //   },()=>console.log("state update:",this.state))
+    // });
     
     
     
@@ -166,6 +229,19 @@ export default class ThreeJS extends Component {
 
 this.start()
   }
+
+  closePopup = (ev) => {
+    this.setState({
+        popup: !this.state.popup,
+      })
+  }
+
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
+
+  
 componentWillUnmount(){
     this.stop()
     this.mount.removeChild(this.renderer.domElement)
@@ -179,10 +255,10 @@ stop = () => {
     cancelAnimationFrame(this.frameId)
   }
 animate = () => {
-   this.cube.rotation.x += 0.01
-  this.cube.rotation.y += 0
-  this.cube1.rotation.x -= 0.01
-   this.cube1.rotation.y += 0
+  //  this.cube.rotation.x += 0.01
+  // this.cube.rotation.y += 0
+  // this.cube1.rotation.x -= 0.01
+  //  this.cube1.rotation.y += 0
    this.renderScene()
    this.frameId = window.requestAnimationFrame(this.animate)
  }
@@ -195,8 +271,38 @@ renderScene = () => {
 
   return (
       <div>
-      {this.state.popup && <h1 style={{ position: "absolute", backgroundColor: "white", color: "black" }}>Hallo im {this.state.id}</h1>} 
+      {this.state.popup && 
+        <>
+        <div className="popup" id="exampleModalScrollable" tabIndex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        
+        <div className="modal-dialog modal-dialog-centered" role="document">
+        <div className="modal-content">
+        <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalCenterTitle">{this.state.roomName} {this.state.roomNumber}</h5>
+        <button type="button" onClick={()=>this.closePopup()} className="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div className="modal-body">
+                <div>Volume: {this.state.roomVolume} m3</div>
+                <div>Area: {this.state.roomArea} m3</div>
+                <div> <div> AHU-VE {this.state.roomAHU}</div> <input type="number" name="roomAHU" value={this.state.roomAHU===0?"":this.state.roomAHU} onChange={this.handleChange} /> </div>
+                <div><div>Airflow {this.state.roomAirflow} </div> <input type="number" name="roomAirflow" value={this.state.roomAirflow===0?"":this.state.roomAirflow} onChange={this.handleChange}/> </div>
+
+        </div>
+        <div className="modal-footer">
+        <button type="button" className="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+        </div>
+        </div>
+        <div className="transparent-background">
+        </div>
+        </>
+      } 
+      
       <div
+     
         style={{ width: '400px', height: '400px' }}
           ref={(mount) => { this.mount = mount }}
           
