@@ -5,7 +5,7 @@ const ProjectBar = (props) => {
 
 
     return (
-        <div className="col-3 projectBar">
+        <div className="col-2 projectBar">
             <h5>Projects</h5>
 
             {props.projects.map(x => {

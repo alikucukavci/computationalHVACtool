@@ -17,12 +17,11 @@ const UploadFile = (props) => {
 
   
   return (
-    <div>
+    <div className="upload-page">
     <Form.Group>
-          <Form.Label>Upload file:</Form.Label>
           <div className="files">
         <Files
-          className="files-dropzone btn-danger"
+          className="files-dropzone"
           onChange={file => {
             fileReader.readAsText(file[0]);
           }}

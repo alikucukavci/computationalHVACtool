@@ -31,7 +31,7 @@ const Projects = () => {
             <div>
                 <div className="row">
                     <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
-                    <div className="col-9 projectScreen">
+                    <div className="col-10 projectScreen">
                     </div>
                 </div>
             </div>
@@ -41,9 +41,13 @@ const Projects = () => {
         return (
             <div>
                 <div className="row">
-                <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
+                    <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject} />
+                    <div className="col-10 projectScreen">
+
                     <CreateProject setDisplay={setDisplay} createNewProject={createNewProject} setcreateNewProject={setcreateNewProject} setDisplay={setDisplay} setProjects={setProjects} projects={projects} jsonFile={jsonFile} setFile={setFile} />
-                </div>
+                    </div>
+                    </div>
+
             </div>
         )
     } else if (display === "oneProject") {
@@ -51,7 +55,7 @@ const Projects = () => {
             <div>
             <div className="row">
             <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
-                <div className="col-9 projectScreen">
+                <div className="col-10 projectScreen">
                         <div> <h1> {oneProject.title}</h1></div>
                 </div>
             </div>
@@ -62,8 +66,8 @@ const Projects = () => {
             <div>
             <div className="row">
             <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
-                <div className="col-9 projectScreen">
-                        <UploadFile project={projects[projects.length - 1]} jsonFile={jsonFile} setFile={setFile} setDisplay={setDisplay}/>
+            <div className="col-10 projectScreen">
+            <UploadFile project={projects[projects.length - 1]} jsonFile={jsonFile} setFile={setFile} setDisplay={setDisplay}/>
                         
                         {/*<p>NewProjectShown</p>
                         <p>{createNewProject.title}</p>
@@ -78,7 +82,7 @@ const Projects = () => {
             <div>
             <div className="row">
             <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
-                <div className="col-9 projectScreen">
+                <div className="col-10 projectScreen">
                         <ThreeJS jsonFile={jsonFile}/>
                         
                         {/*<p>NewProjectShown</p>

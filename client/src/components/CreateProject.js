@@ -6,23 +6,6 @@ import Files from "react-files";
 
 const CreateProject = (props) => {
 
-    
-  // useEffect(() => {
-  //     axios
-  //     .post("/projects", {
-  //       file: jsonFile
-  //     })
-  //     .then(() => {
-  //       console.log("MongoDB is working")
-  //       })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  //     console.log(jsonFile)
-
-
-  // }, [jsonFile])
-
   let fileReader = new FileReader()
   fileReader.onload = event => {
       props.setFile(JSON.parse(event.target.result));
@@ -63,7 +46,7 @@ const handleChange = event => {
 
     
     return (
-        <div className="col-9 projectScreen">
+        <div>
         <h2>Add task: </h2>
         <Form onSubmit={handleSubmit}>
           <Form.Group>

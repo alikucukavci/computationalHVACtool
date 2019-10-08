@@ -59,12 +59,17 @@ h2 {
 }
 
 .projectBar {
-  background-color: red;
-  height: 100vh
+  background-color: lightblue;
+  height: 100vh;
+  padding-top: 50px;
+}
+
+.bg-primary {
+  background-color: lightskyblue !important;
 }
 
 .projectScreen {
-  background-color: green
+  background-color: white
 }
 
 .popup {
@@ -87,4 +92,25 @@ h2 {
 
 .popup hr {
   border: 1px solid black 
+}
+
+.col-10 {
+  padding: 0; 
+  margin: 0;
+}
+
+
+.upload-page {
+  padding: 90px; 
+  padding-top: 120px;
+
+
+}
+
+.files-dropzone{
+  height: 50vh;
+  line-height: 45vh;
+  text-align: center;
+  border: 2px dashed #f69c55;
+
 }
