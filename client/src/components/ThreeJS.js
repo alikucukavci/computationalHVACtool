@@ -174,10 +174,10 @@ renderScene = () => {
     
 
 
-    axios.put(`/projects/${this.props.project._id}`, {
+    axios.put(`/api/projects/${this.props.project._id}`, {
       roomAHU, roomAirflow, roomID
     }).then(response => {
-      axios.get("/projects").then(projects => {
+      axios.get("/api/projects").then(projects => {
         this.props.setProjects(projects.data)
       })
     })

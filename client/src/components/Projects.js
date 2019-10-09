@@ -18,7 +18,7 @@ const Projects = () => {
     const [jsonFile, setFile] = useState({})
 
       useEffect(() => {
-          axios.get("/projects").then(projects => {
+          axios.get("/api/projects").then(projects => {
               setProjects(projects.data)
 
               console.log(projects.data)

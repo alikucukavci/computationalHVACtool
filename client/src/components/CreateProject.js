@@ -23,7 +23,7 @@ const handleChange = event => {
         event.preventDefault();
     
         axios
-          .post("/projects", {
+          .post("/api/projects", {
             title: props.createNewProject.title,
             description: props.createNewProject.description,
 
@@ -36,7 +36,7 @@ const handleChange = event => {
             console.log(err);
           });
       
-          axios.get("/projects").then(projects => {
+          axios.get("/api/projects").then(projects => {
               props.setProjects(projects.data)
               console.log(projects.data)
           })

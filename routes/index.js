@@ -3,9 +3,6 @@ const router = express.Router();
 const Project = require('../models/Project');
 
 /* GET home page */
-router.get('/', (req, res, next) => {
-    res.render('index');
-});
 
 router.get('/projects', (req, res, next) => {
     Project.find()

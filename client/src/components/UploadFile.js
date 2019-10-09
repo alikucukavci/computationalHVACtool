@@ -16,7 +16,7 @@ const UploadFile = (props) => {
     })
 
     props.setFile(newFile);
-    axios.put(`/projects/${props.project._id}`, {
+    axios.put(`/api/projects/${props.project._id}`, {
       file: newFile
     })  
     props.setDisplay("ThreeJS")
