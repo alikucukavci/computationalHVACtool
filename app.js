@@ -19,7 +19,7 @@ const passport = require("passport");
 require("./configs/passport");
 
 mongoose
-  .connect("mongodb://localhost/ComputationalHVACDatabase", {
+  .connect(process.env.MONGODB_URI || "mongodb://localhost/ComputationalHVACDatabase", {
     useNewUrlParser: true
   })
   .then(x => {
