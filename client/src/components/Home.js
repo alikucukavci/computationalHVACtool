@@ -83,13 +83,15 @@ export default class ThreeJS extends Component {
     
     // //ADD material  
     const material = new THREE.MeshLambertMaterial({ color: '#0xF3FFE2'})
-    const edges = new THREE.EdgesGeometry( geometry )
-    const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: "#000000" }));
+    const line = new THREE.LineSegments(new THREE.EdgesGeometry( geometry ), new THREE.LineBasicMaterial({ color: "#000000" }));
     
     // //ADD geometry and material to a mesh
     const cube = new THREE.Mesh(geometry, material)
     this.scene.add( cube );
-    this.scene.add( line )
+    this.scene.add(line)
+    
+    cube.position.set(3, 3, 3)
+    line.position.set(3,3,3)
 
 
 

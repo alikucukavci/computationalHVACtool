@@ -79,7 +79,7 @@ const Projects = () => {
             <div className="row">
             <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
             <div className="col-10 projectScreen">
-            <UploadFile project={projects[projects.length - 1]} jsonFile={jsonFile} setFile={setFile} setDisplay={setDisplay}/>
+            <UploadFile setOneProject={setOneProject} project={projects[projects.length - 1]} jsonFile={jsonFile} setFile={setFile} setDisplay={setDisplay}/>
                         
                         {/*<p>NewProjectShown</p>
                         <p>{createNewProject.title}</p>
@@ -90,13 +90,16 @@ const Projects = () => {
         </div>
         )
     } else if (display === "ThreeJS") {
-        console.log(projects[projects.length - 1])
+        console.log(oneProject)
         return ( 
             <div>
             <div className="row">
             <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
                 <div className="col-10 projectScreen">
-                        <ThreeJS project={oneProject} jsonFile={oneProject.file ? oneProject.file : jsonFile} setProjects={setProjects}/>
+                        <ThreeJS
+                            projects={projects}
+                        setOneProject={setOneProject}
+                            project={oneProject} jsonFile={oneProject.file ? oneProject.file : jsonFile} setProjects={setProjects} />
                         
                         {/*<p>NewProjectShown</p>
                         <p>{createNewProject.title}</p>

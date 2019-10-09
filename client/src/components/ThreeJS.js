@@ -59,25 +59,27 @@ export default class ThreeJS extends Component {
     
     //Magic
     const cubeArr = []
-
+    const lineArr = []
     for (let i=0; i <this.props.jsonFile.rooms.length; i++){
       //ADD GEOMETRY
       let geometry = new THREE.BoxGeometry(this.props.jsonFile.rooms[i].size.x, this.props.jsonFile.rooms[i].size.y, this.props.jsonFile.rooms[i].size.z);
       //ADD MATERIAL
       let material = new THREE.MeshLambertMaterial({ color: 'red' });
       //ADD EDGES AND LINE
-      let edges = new THREE.EdgesGeometry(geometry)
-      let line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: "#000000" }));
+      let line = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), new THREE.LineBasicMaterial({
+        color: "#000000"}));
+    
 
       //ADD ARRAY OF MESHES
       cubeArr.push(new THREE.Mesh(geometry, material)) 
-      
+      lineArr.push(line)
      }
 
     for (let i = 0; i < cubeArr.length; i++){
       
       //ADD POSITION 
       cubeArr[i].position.set(this.props.jsonFile.rooms[i].position.x, this.props.jsonFile.rooms[i].position.y, this.props.jsonFile.rooms[i].position.z);
+      lineArr[i].position.set(this.props.jsonFile.rooms[i].position.x, this.props.jsonFile.rooms[i].position.y, this.props.jsonFile.rooms[i].position.z);
 
       //ADD PROPERTIES
       cubeArr[i].Name = this.props.jsonFile.rooms[i].roomName;
@@ -110,6 +112,7 @@ export default class ThreeJS extends Component {
 
       //ADD CUBE TO SCENE
       this.scene.add(cubeArr[i]);
+      this.scene.add(lineArr[i]);
 
       console.log(cubeArr[i])
     }
@@ -172,14 +175,20 @@ renderScene = () => {
 
     const {roomAHU, roomAirflow, roomID} = this.state
     
-
-
     axios.put(`/api/projects/${this.props.project._id}`, {
       roomAHU, roomAirflow, roomID
     }).then(response => {
-      axios.get("/api/projects").then(projects => {
-        this.props.setProjects(projects.data)
+      console.log(response.data)
+      this.props.setOneProject(response.data)
+    let updatedProjects =  this.props.projects.map(project => {
+        if (project._id === response.data._id) {
+          return response.data
+        }else return project
       })
+      this.props.setProjects(updatedProjects)
+      // axios.get("/api/projects").then(projects => {
+      //   this.props.setProjects(projects.data)
+      // })
     })
     console.log(this.props.project._id, "threeJS react working")
     // props.setDisplay("ThreeJS")

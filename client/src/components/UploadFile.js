@@ -15,10 +15,12 @@ const UploadFile = (props) => {
       return x;
     })
 
+    props.setOneProject({}) //The only change
     props.setFile(newFile);
     axios.put(`/api/projects/${props.project._id}`, {
       file: newFile
-    })  
+    }) //.then(response => {
+      // this.props.setOneProject(response.data)  
     props.setDisplay("ThreeJS")
 }
 

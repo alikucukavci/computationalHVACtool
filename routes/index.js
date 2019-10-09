@@ -32,6 +32,7 @@ router.post('/projects', (req, res, next) => {
 });
 
 router.put('/projects/:id', (req, res, next) => {
+    console.log(req.params.id)
     let updated
     if (req.body.file) updated = { file: req.body.file };
     else {
