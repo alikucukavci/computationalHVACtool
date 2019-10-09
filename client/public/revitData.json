@@ -13,7 +13,9 @@
 				"x": "0",
 				"y": "0",
 				"z": "0"
-			}
+			},
+			"roomAHU": "0",
+			"roomAirflow": "0"
 		},
 		{
 			"roomName": "Auditorium",
@@ -29,7 +31,9 @@
 				"x": "5",
 				"y": "0",
 				"z": "-2"
-			}
+			},
+			"roomAHU": "0",
+			"roomAirflow": "0"
 		}
 
 	]

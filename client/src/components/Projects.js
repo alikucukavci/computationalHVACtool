@@ -24,7 +24,19 @@ const Projects = () => {
               console.log(projects.data)
           })
           setDisplay("None")
-  }, [])
+      }, [])
+    
+    
+    console.log("Projects component render")
+    
+//       useEffect(() => {
+//         axios.get("/projects").then(projects => {
+//             setProjects(projects.data)
+
+//             console.log(projects.data)
+//         })
+//         setDisplay("ThreeJS")
+// }, [jsonFile])
 
     if (display === "None") {
         return (
@@ -78,12 +90,13 @@ const Projects = () => {
         </div>
         )
     } else if (display === "ThreeJS") {
+        console.log(projects[projects.length - 1])
         return ( 
             <div>
             <div className="row">
             <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject}/>
                 <div className="col-10 projectScreen">
-                        <ThreeJS jsonFile={jsonFile}/>
+                        <ThreeJS project={oneProject} jsonFile={oneProject.file ? oneProject.file : jsonFile} setProjects={setProjects}/>
                         
                         {/*<p>NewProjectShown</p>
                         <p>{createNewProject.title}</p>

@@ -35,8 +35,16 @@ router.post('/projects', (req, res, next) => {
 });
 
 router.put('/projects/:id', (req, res, next) => {
-  console.log(req.body)
-  Project.findByIdAndUpdate(req.params.id,{file:req.body.file})
+    let updated
+    if (req.body.file) updated = { file: req.body.file };
+    else {
+        const { roomAHU, roomAirflow, roomID } = req.body;
+        updated = 
+             { $set: { [`file.rooms.${roomID}.roomAHU`]: roomAHU, [`file.rooms.${roomID}.roomAirflow`]: roomAirflow } }
+        console.log(updated)
+
+    }
+  Project.findByIdAndUpdate(req.params.id,updated, {new: true})
         .then(response => {
             res.json(response);
         })
@@ -44,5 +52,6 @@ router.put('/projects/:id', (req, res, next) => {
             res.json(err);
         });
 });
+
 
 module.exports = router;

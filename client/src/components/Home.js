@@ -79,57 +79,25 @@ export default class ThreeJS extends Component {
     // ADD interaction
     this.interaction = new Interaction(this.renderer, this.scene, this.camera);
     
+    const geometry = new THREE.BoxGeometry(3, 3, 3)
     
-    //Magic
-    const cubeArr = []
-    for (let i=0; i <data.rooms.length; i++){
-      //ADD GEOMETRY
-      let geometry = new THREE.BoxGeometry(data.rooms[i].size.x, data.rooms[i].size.y, data.rooms[i].size.z);
-      //ADD MATERIAL
-      let material = new THREE.MeshLambertMaterial({ color: 'red' });
-      //ADD ARRAY OF MESHES
-      cubeArr.push(new THREE.Mesh(geometry, material)) 
-      
-     }
-
-    for (let i = 0; i < cubeArr.length; i++){
-      
-      //ADD POSITION 
-      cubeArr[i].position.set(data.rooms[i].position.x, data.rooms[i].position.y, data.rooms[i].position.z);
-
-      //ADD PROPERTIES
-      cubeArr[i].AHU = 0;
-      cubeArr[i].Name = data.rooms[i].roomName;
-      cubeArr[i].Number = data.rooms[i].roomNumber;  
-      cubeArr[i].Volume = data.rooms[i].roomVolume; 
-      cubeArr[i].Area = data.rooms[i].roomArea;  
-      cubeArr[i].AHU = 0;  
-      cubeArr[i].Airflow = 0;  
-
-      //ADD POINTER
-      cubeArr[i].cursor = 'pointer';
+    // //ADD material  
+    const material = new THREE.MeshLambertMaterial({ color: '#0xF3FFE2'})
+    const edges = new THREE.EdgesGeometry( geometry )
+    const line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: "#000000" }));
+    
+    // //ADD geometry and material to a mesh
+    const cube = new THREE.Mesh(geometry, material)
+    this.scene.add( cube );
+    this.scene.add( line )
 
 
-      //ADD EVENT
-      cubeArr[i].on('click', (ev) => {
-      this.setState({
-        popup: !this.state.popup,
-        id: ev.target.uuid,
-        roomName: ev.target.Name,
-        roomNumber: ev.target.Number,
-        roomVolume: ev.target.Volume,
-        roomArea: ev.target.Area,
-        roomAHU: ev.target.AHU,
-        roomAirflow: ev.target.Airflow
-      },()=>console.log("state update:",this.state))
-    });
 
+//     var geometry = new THREE.BoxGeometry( 100, 100, 100 );
+// var edges = new THREE.EdgesGeometry( geometry );
+// var line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
+// this.scene.add( line );
 
-      //ADD CUBE TO SCENE
-      this.scene.add(cubeArr[i]);
-
-      console.log(cubeArr[i])
-    }
     
     //ADD POPUP REFERENCE
     this.popup = false

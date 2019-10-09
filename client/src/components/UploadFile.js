@@ -8,6 +8,13 @@ const UploadFile = (props) => {
   let fileReader = new FileReader()
   fileReader.onload = event => {
     let newFile = JSON.parse(event.target.result)
+
+    //ADD uniq ID FOR EVERY ROOM
+    newFile.rooms = newFile.rooms.map((x,i) => {
+      x.id = i; 
+      return x;
+    })
+
     props.setFile(newFile);
     axios.put(`/projects/${props.project._id}`, {
       file: newFile

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import * as THREE from 'three';
 import OrbitControls from "three-orbitcontrols"
 import { Interaction } from "three.interaction"
-
+import axios from "axios"
 
 
 
@@ -16,7 +16,19 @@ export default class ThreeJS extends Component {
     roomArea: 0,
     roomAHU: 0,
     roomAirflow: 0,
+    roomID: "",
 
+  }
+
+  componentDidUpdate() {
+    console.log(this.scene)
+    this.props.jsonFile.rooms.forEach(room => {
+      //Updating all rooms with the new value
+      const mesh = this.scene.children.find(x => x.roomID === room.id)
+      console.log(mesh)
+      mesh.AHU = room.roomAHU;
+      mesh.Airflow = room.roomAirflow;
+    })
   }
 
   componentDidMount(){
@@ -47,11 +59,16 @@ export default class ThreeJS extends Component {
     
     //Magic
     const cubeArr = []
+
     for (let i=0; i <this.props.jsonFile.rooms.length; i++){
       //ADD GEOMETRY
       let geometry = new THREE.BoxGeometry(this.props.jsonFile.rooms[i].size.x, this.props.jsonFile.rooms[i].size.y, this.props.jsonFile.rooms[i].size.z);
       //ADD MATERIAL
       let material = new THREE.MeshLambertMaterial({ color: 'red' });
+      //ADD EDGES AND LINE
+      let edges = new THREE.EdgesGeometry(geometry)
+      let line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: "#000000" }));
+
       //ADD ARRAY OF MESHES
       cubeArr.push(new THREE.Mesh(geometry, material)) 
       
@@ -63,13 +80,13 @@ export default class ThreeJS extends Component {
       cubeArr[i].position.set(this.props.jsonFile.rooms[i].position.x, this.props.jsonFile.rooms[i].position.y, this.props.jsonFile.rooms[i].position.z);
 
       //ADD PROPERTIES
-      cubeArr[i].AHU = 0;
       cubeArr[i].Name = this.props.jsonFile.rooms[i].roomName;
       cubeArr[i].Number = this.props.jsonFile.rooms[i].roomNumber;  
       cubeArr[i].Volume = this.props.jsonFile.rooms[i].roomVolume; 
       cubeArr[i].Area = this.props.jsonFile.rooms[i].roomArea;  
-      cubeArr[i].AHU = 0;  
-      cubeArr[i].Airflow = 0;  
+      cubeArr[i].AHU = this.props.jsonFile.rooms[i].roomAHU;
+      cubeArr[i].Airflow = this.props.jsonFile.rooms[i].roomAirflow;
+      cubeArr[i].roomID = this.props.jsonFile.rooms[i].id;
 
       //ADD POINTER
       cubeArr[i].cursor = 'pointer';
@@ -80,6 +97,7 @@ export default class ThreeJS extends Component {
       this.setState({
         popup: !this.state.popup,
         id: ev.target.uuid,
+        roomID: ev.target.roomID,
         roomName: ev.target.Name,
         roomNumber: ev.target.Number,
         roomVolume: ev.target.Volume,
@@ -149,10 +167,30 @@ renderScene = () => {
   this.renderer.render(this.scene, this.camera)
   }
   
-  
+  handleSubmit = event => {
+    event.preventDefault();
+
+    const {roomAHU, roomAirflow, roomID} = this.state
+    
+
+
+    axios.put(`/projects/${this.props.project._id}`, {
+      roomAHU, roomAirflow, roomID
+    }).then(response => {
+      axios.get("/projects").then(projects => {
+        this.props.setProjects(projects.data)
+      })
+    })
+    console.log(this.props.project._id, "threeJS react working")
+    // props.setDisplay("ThreeJS")
+  }
+
+
+
   render() {
   return (
-      <div>
+    <div>
+      <form className="form-roomSubmit" onSubmit={this.handleSubmit}>
       {this.state.popup && 
         <>
         <div className="popup" id="exampleModalScrollable" tabIndex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -168,12 +206,19 @@ renderScene = () => {
         <div className="modal-body">
                 <div>Volume: {this.state.roomVolume} m3</div>
                 <div>Area: {this.state.roomArea} m3</div>
-                <div> <div> AHU-VE {this.state.roomAHU}</div> <input type="number" name="roomAHU" value={this.state.roomAHU===0?"":this.state.roomAHU} onChange={this.handleChange} /> </div>
-                <div><div>Airflow {this.state.roomAirflow} </div> <input type="number" name="roomAirflow" value={this.state.roomAirflow===0?"":this.state.roomAirflow} onChange={this.handleChange}/> </div>
+                
+                <div className="popup-input">
+                  <div className="popup-changeableInput"> AHU-VE {this.state.roomAHU}</div>
+                  <input type="number" name="roomAHU" value={this.state.roomAHU === 0 ? "" : this.state.roomAHU} onChange={this.handleChange} />
+                </div>
+                
+                <div className="popup-input">
+                  <div className="popup-changeableInput">Airflow {this.state.roomAirflow} m3/h </div> <input type="number" name="roomAirflow" value={this.state.roomAirflow === 0 ? "" : this.state.roomAirflow}  onChange={this.handleChange} />
+                </div>
 
         </div>
         <div className="modal-footer">
-        <button type="button" className="btn btn-primary">Save changes</button>
+        <button type="submit" className="btn btn-primary">Save changes</button>
         </div>
         </div>
         </div>
@@ -192,7 +237,7 @@ renderScene = () => {
       >
 </div>
     
-      
+</form>
       </div>
     )
   }

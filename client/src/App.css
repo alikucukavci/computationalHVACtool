@@ -114,3 +114,35 @@ h2 {
   border: 2px dashed #f69c55;
 
 }
+
+.modal-body {
+  padding-left: 5vw;
+  display: flex;
+  flex-direction: column; 
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.popup-input  {
+  display: flex;
+  align-items: center
+}
+.popup-input input {
+  width: 5vh;
+  height: 3vh
+  
+}
+
+.popup-changeableInput {
+text-align: left;
+ width: 5vw;
+}
+
+.modal-body > div {
+  padding-top: 2vh
+}
+
+.form-roomSubmit{
+  padding: 0;
+  margin: 0;
+}

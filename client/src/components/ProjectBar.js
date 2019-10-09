@@ -13,7 +13,7 @@ const ProjectBar = (props) => {
                     <div onClick={() => {
                         console.log(x)
                         props.setOneProject(x)
-                        props.setDisplay("oneProject")
+                        props.setDisplay("ThreeJS")
                     }}>{x.title}</div>
                 )
             })}
