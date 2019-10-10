@@ -14,6 +14,7 @@ const App = (props) => {
   return (
     <div className="App">
       <Navbar user={user} setUser={setUser}/>
+     <div>
       <Switch>
         <Route
           exact
@@ -44,6 +45,7 @@ const App = (props) => {
           
         />
       </Switch>
+      </div> 
     </div>
   );
 }
