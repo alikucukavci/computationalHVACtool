@@ -6,7 +6,7 @@ import UploadFile from "./UploadFile"
 import ThreeJS from "./ThreeJS"
 
 
-const Projects = () => {
+const Projects = (props) => {
     const [display, setDisplay] = useState("None")
     const  [oneProject, setOneProject] = useState({})
     const [projects, setProjects] = useState([])
@@ -18,7 +18,7 @@ const Projects = () => {
     const [jsonFile, setFile] = useState({})
 
       useEffect(() => {
-          axios.get("/api/projects").then(projects => {
+          axios.get(`/api/projects/${props.user._id}`).then(projects => {
               setProjects(projects.data)
 
               console.log(projects.data)
@@ -39,6 +39,8 @@ const Projects = () => {
 // }, [jsonFile])
 
     if (display === "None") {
+        console.log("user",props.user)
+
         return (
             <div>
                 <div className="row">
@@ -56,7 +58,7 @@ const Projects = () => {
                     <ProjectBar projects={projects} setDisplay={setDisplay} setOneProject={setOneProject} />
                     <div className="col-10 projectScreen">
 
-                    <CreateProject setDisplay={setDisplay} createNewProject={createNewProject} setcreateNewProject={setcreateNewProject} setDisplay={setDisplay} setProjects={setProjects} projects={projects} jsonFile={jsonFile} setFile={setFile} />
+                    <CreateProject setDisplay={setDisplay} createNewProject={createNewProject} setcreateNewProject={setcreateNewProject} setDisplay={setDisplay} setProjects={setProjects} projects={projects} jsonFile={jsonFile} setFile={setFile} user={props.user}/>
                     </div>
                     </div>
 

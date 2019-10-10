@@ -38,7 +38,7 @@ const App = (props) => {
           // component={Projects}
 
           component={props => {
-            if (user) return <Projects {...props} />;
+            if (user) return <Projects user={user} {...props} />;
             else return <Redirect to="/" />;
           }}
           

@@ -26,7 +26,7 @@ const handleChange = event => {
           .post("/api/projects", {
             title: props.createNewProject.title,
             description: props.createNewProject.description,
-
+            owner: props.user._id
           })
           .then((response) => {
             console.log(response.data)
@@ -36,7 +36,7 @@ const handleChange = event => {
             console.log(err);
           });
       
-          axios.get("/api/projects").then(projects => {
+          axios.get(`/api/projects/${props.user._id}`).then(projects => {
               props.setProjects(projects.data)
               console.log(projects.data)
           })

@@ -4,8 +4,9 @@ const Project = require('../models/Project');
 
 /* GET home page */
 
-router.get('/projects', (req, res, next) => {
-    Project.find()
+router.get('/projects/:id', (req, res, next) => {
+    const id = req.params.id
+    Project.find({owner:id})
         .then(response => {
             res.json(response);
         })
@@ -18,7 +19,8 @@ router.get('/projects', (req, res, next) => {
 router.post('/projects', (req, res, next) => {
     Project.create({
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        owner: req.body.owner
         // file: req.body.file,
         //  // <== add this !
         // Rooms: []

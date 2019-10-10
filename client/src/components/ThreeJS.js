@@ -20,14 +20,52 @@ export default class ThreeJS extends Component {
 
   }
 
+  perc2color=(perc)=> {
+   
+    var r, g, b = 0;
+    if(perc < 50) {
+        r = 255;
+        g = Math.round(5.1 * perc);
+    }
+    else {
+        g = 255;
+        r = Math.round(510 - 5.10 * perc);
+    }
+    let h = r * 0x10000 + g * 0x100 + b * 0x1;
+    return  "#"+(("000000" + h.toString(16)).slice(-6));
+
+   
+      // let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(rgb);
+      //   console.log( {
+      //     r: parseInt(result[1], 16),
+      //     g: parseInt(result[2], 16),
+      //     b: parseInt(result[3], 16)
+      //   } )
+      // return result ? {
+      //   r: parseInt(result[1], 16),
+      //   g: parseInt(result[2], 16),
+      //   b: parseInt(result[3], 16)
+      // } : null;
+    
+      
+      
+      
+}
+
   componentDidUpdate() {
-    console.log(this.scene)
-    this.props.jsonFile.rooms.forEach(room => {
+
+    let colorArr = [{r:25, g:229, b:0},{r:255, g:0, b:0},{r:173, g:70, b:0},{r:0, g:255, b:0}]
+    
+    this.props.jsonFile.rooms.forEach((room,i) => {
       //Updating all rooms with the new value
       const mesh = this.scene.children.find(x => x.roomID === room.id)
-      console.log(mesh)
       mesh.AHU = room.roomAHU;
       mesh.Airflow = room.roomAirflow;
+      let color = new THREE.Color(this.perc2color(mesh.Airflow))
+
+       mesh.material.color = color
+      // mesh.material.color.setHex(this.perc2color(mesh.Airflow) )
+     
     })
   }
 
@@ -59,27 +97,35 @@ export default class ThreeJS extends Component {
     
     //Magic
     const cubeArr = []
-    // const lineArr = []
+    const lineArr = []
+
+
+
     for (let i=0; i <this.props.jsonFile.rooms.length; i++){
       //ADD GEOMETRY
+      console.log("iiiii",this.props.jsonFile.rooms[i])
       let geometry = new THREE.BoxGeometry(this.props.jsonFile.rooms[i].size.x, this.props.jsonFile.rooms[i].size.y, this.props.jsonFile.rooms[i].size.z);
       //ADD MATERIAL
-      let material = new THREE.MeshLambertMaterial({ color: 'red' });
+   
+      let color = new THREE.Color(this.perc2color(this.props.jsonFile.rooms[i].roomAirflow))
+
+       
+      let material = new THREE.MeshLambertMaterial({ color });
       //ADD EDGES AND LINE
-      // let line = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), new THREE.LineBasicMaterial({
-      //   color: "#000000"}));
+      let line = new THREE.LineSegments(new THREE.EdgesGeometry(geometry), new THREE.LineBasicMaterial({
+        color: "#000000"}));
     
 
       //ADD ARRAY OF MESHES
       cubeArr.push(new THREE.Mesh(geometry, material)) 
-      // lineArr.push(line)
+      lineArr.push(line)
      }
 
     for (let i = 0; i < cubeArr.length; i++){
       
       //ADD POSITION 
       cubeArr[i].position.set(this.props.jsonFile.rooms[i].position.x, this.props.jsonFile.rooms[i].position.y, this.props.jsonFile.rooms[i].position.z);
-      // lineArr[i].position.set(this.props.jsonFile.rooms[i].position.x, this.props.jsonFile.rooms[i].position.y, this.props.jsonFile.rooms[i].position.z);
+      lineArr[i].position.set(this.props.jsonFile.rooms[i].position.x, this.props.jsonFile.rooms[i].position.y, this.props.jsonFile.rooms[i].position.z);
 
       //ADD PROPERTIES
       cubeArr[i].Name = this.props.jsonFile.rooms[i].roomName;
@@ -112,9 +158,8 @@ export default class ThreeJS extends Component {
 
       //ADD CUBE TO SCENE
       this.scene.add(cubeArr[i]);
-      // this.scene.add(lineArr[i]);
-
-      console.log(cubeArr[i])
+      this.scene.add(lineArr[i]);
+    console.log(this.scene)
     }
     
     //ADD POPUP REFERENCE
