@@ -95,7 +95,7 @@ export default class ThreeJS extends Component {
     this.interaction = new Interaction(this.renderer, this.scene, this.camera);
     
     
-    //Magic
+    //Create cubes and lines
     const cubeArr = []
     const lineArr = []
 
