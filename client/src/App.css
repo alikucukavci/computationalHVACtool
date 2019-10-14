@@ -159,11 +159,11 @@ text-align: left;
 
 
 body {
-    background: linear-gradient(253deg, #1488cc, #2b32b2, #1488cc);
+    background: linear-gradient(253deg, #1488cc, #2bb285, #565e0b);
     background-size: 300% 300%;
-    -webkit-animation: Background 25s ease infinite;
-    -moz-animation: Background 25s ease infinite;
-    animation: Background 25s ease infinite;
+    -webkit-animation: Background 10s ease infinite;
+    -moz-animation: Background 10s ease infinite;
+    animation: Background 10s ease infinite;
   }
   
   @-webkit-keyframes Background {
@@ -241,7 +241,7 @@ body {
     color: #fff;
     letter-spacing: 1px;
     font-family: 'Poiret One', sans-serif;
-    content: 'Supported by The Amazing Focus Min!';
+    content: '';
     font-size: .4em;
     text-align: center;
   }
