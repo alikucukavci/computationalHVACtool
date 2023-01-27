@@ -1,0 +1,76 @@
+{
+	"rooms": [{
+			"roomName": "Class room",
+			"roomNumber": "1",
+			"roomVolume": "50",
+			"roomArea": "25",
+			"size": {
+				"x": "3",
+				"y": "3",
+				"z": "3"
+			},
+			"position": {
+				"x": "0",
+				"y": "0",
+				"z": "0"
+			},
+			"roomAHU": "0",
+			"roomAirflow": "0"
+		},
+		{
+			"roomName": "Class room",
+			"roomNumber": "2",
+			"roomVolume": "50",
+			"roomArea": "25",
+			"size": {
+				"x": "3",
+				"y": "3",
+				"z": "3"
+			},
+			"position": {
+				"x": "3",
+				"y": "0",
+				"z": "0"
+			},
+			"roomAHU": "0",
+			"roomAirflow": "0"
+		},
+		{
+			"roomName": "Class room",
+			"roomNumber": "3",
+			"roomVolume": "50",
+			"roomArea": "25",
+			"size": {
+				"x": "3",
+				"y": "3",
+				"z": "3"
+			},
+			"position": {
+				"x": "6",
+				"y": "0",
+				"z": "0"
+			},
+			"roomAHU": "0",
+			"roomAirflow": "0"
+		},
+		{
+			"roomName": "Class room",
+			"roomNumber": "4",
+			"roomVolume": "50",
+			"roomArea": "25",
+			"size": {
+				"x": "3",
+				"y": "3",
+				"z": "3"
+			},
+			"position": {
+				"x": "9",
+				"y": "0",
+				"z": "0"
+			},
+			"roomAHU": "0",
+			"roomAirflow": "0"
+		}
+
+	]
+}
